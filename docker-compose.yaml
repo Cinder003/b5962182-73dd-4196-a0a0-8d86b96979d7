@@ -1,0 +1,24 @@
+services:
+  backend:
+    build: ./Backend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./Backend/data:/usr/src/app/data
+    env_file:
+      - ./Backend/.env
+    networks:
+      - app-network
+
+  frontend:
+    build: ./Front-end
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
